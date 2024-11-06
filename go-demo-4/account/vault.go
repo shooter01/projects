@@ -15,7 +15,8 @@ type Vault struct {
 }
 
 func NewVault() (*Vault){
-	file, err := files.ReadFile("data.json")
+	db := files.NewJsonDb("data.json")
+	file, err := db.Read()
 	if err != nil {
 		return &Vault {
 			Accounts: []Account{},
@@ -82,6 +83,8 @@ func (vault *Vault) ToByte() ([]byte, error) {
 }
 
 func (vault *Vault) save() {
+	db := files.NewJsonDb("data.json")
+
 	vault.UpdatedAt = time.Now()
 
 	data, err := vault.ToByte()
@@ -91,5 +94,5 @@ func (vault *Vault) save() {
 		color.Red(err.Error())
 	}
 
-	files.WriteFile(string(data), "data.json")
+	db.Write(string(data))
 }
