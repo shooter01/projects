@@ -72,6 +72,14 @@ func getTransactionsPrompt() (float64) {
 	return number
 }
 
+
+func get() (float64) {
+	var number float64;
+	fmt.Print("Введите число: ");
+	fmt.Scan(&number);
+	return number
+}
+
 func getUserAnswer() (string) {
 	var answer string;
 	fmt.Println("Рассчитать индекс тела?");
