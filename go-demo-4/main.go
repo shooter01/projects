@@ -22,7 +22,7 @@ Menu:
 		case 2:
 			findAccount(vault)
 		case 3:
-			deleteAccount()
+			deleteAccount(vault)
 		default:
 			break Menu
 		}
@@ -34,8 +34,9 @@ Menu:
 
 
 
-func deleteAccount(){
-
+func deleteAccount(vault *account.Vault){
+	url := promptData("Введите URL")
+	vault.DeleteAccountByURL(url)
 }
 
 func findAccount(vault *account.Vault){
