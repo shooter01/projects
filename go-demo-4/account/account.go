@@ -19,6 +19,13 @@ func (acc *Account) outputPassword() {
 	// acc.password = generatePassword(10)
 }
 
+
+func (acc *Account) Output() {
+	fmt.Println(acc.Login)
+	fmt.Println(acc.Password)
+	fmt.Println(acc.Url)
+}
+
 func NewAccount(login, password, urlString string) (*Account, error) {
 
 	_, err := url.ParseRequestURI(urlString)
