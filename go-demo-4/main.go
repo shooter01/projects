@@ -48,11 +48,13 @@ func createAccount(){
 		fmt.Println("'Неверный формат логин или урл'")
 		return
 	}
-	file, err := myAccount.ToByte()
+	vault := account.NewVault()
+	vault.AddAccount(*myAccount)
+	data, err := vault.ToByte()
 	if err != nil {
 		fmt.Println("Не удалось преобразовать данные")
 	}
-	files.WriteFile(string(file), "data.json")
+	files.WriteFile(string(data), "data.json")
 	// color.RGB(255, 128, 0).Println(myAccount)
 }
 
