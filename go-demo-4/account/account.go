@@ -24,6 +24,7 @@ func (acc *Account) ToByte() ([]byte, error) {
 
 }
 
+
 func (acc *Account) outputPassword() {
 	// acc.password = generatePassword(10)
 }
