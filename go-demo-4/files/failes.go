@@ -21,10 +21,11 @@ func WriteFile(content string, name string) {
 	
 }
 
-func ReadFile(name string) {
+func ReadFile(name string) ([]byte, error) {
 	data, err := os.ReadFile(name)
 	if err != nil {
 		fmt.Println(err)
 	}
 	fmt.Println(string(data))
+	return data, nil
 }

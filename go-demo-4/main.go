@@ -2,7 +2,6 @@ package main
 
 import (
 	"demo/password/account"
-	"demo/password/files"
 	"fmt"
 ) 
 
@@ -50,11 +49,11 @@ func createAccount(){
 	}
 	vault := account.NewVault()
 	vault.AddAccount(*myAccount)
-	data, err := vault.ToByte()
-	if err != nil {
-		fmt.Println("Не удалось преобразовать данные")
-	}
-	files.WriteFile(string(data), "data.json")
+	// data, err := vault.ToByte()
+	// if err != nil {
+	// 	fmt.Println("Не удалось преобразовать данные")
+	// }
+	// files.WriteFile(string(data), "data.json")
 	// color.RGB(255, 128, 0).Println(myAccount)
 }
 
