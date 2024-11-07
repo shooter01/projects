@@ -1,6 +1,7 @@
 package files
 
 import (
+	"demo/password/output"
 	"fmt"
 	"os"
 )
@@ -9,12 +10,11 @@ type JsonDb struct {
 	filename string
 }
 
-func NewJsonDb(name string) *JsonDb{
+func NewJsonDb(name string) *JsonDb {
 	return &JsonDb{
 		filename: name,
 	}
 }
-
 
 func (db *JsonDb) Write(content string) {
 	file, err := os.Create(db.filename)
@@ -27,8 +27,8 @@ func (db *JsonDb) Write(content string) {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("Запись успешна")
-	
+	output.PrintError("Запись успешна")
+
 }
 
 func (db *JsonDb) Read() ([]byte, error) {
