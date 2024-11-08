@@ -13,7 +13,7 @@ type ByteReader interface {
 }
 
 type ByteWriter interface {
-	Write(string)
+	Write([]byte)
 }
 
 type Db interface {
@@ -44,9 +44,9 @@ func NewVault(db Db, enc encrypter.Encrypter) *VaultWithDb {
 			enc: enc,
 		}
 	}
-
+	data := enc.Decrypt(file)
 	var vault Vault
-	err = json.Unmarshal(file, &vault)
+	err = json.Unmarshal(data, &vault)
 	if err != nil {
 		output.PrintError("Не удалось разобрать файл data.json")
 		output.PrintError(err.Error())
@@ -114,10 +114,12 @@ func (vault *VaultWithDb) save() {
 	vault.UpdatedAt = time.Now()
 
 	data, err := vault.Vault.ToByte()
+	encData := vault.enc.Encrypt(data)
 	if err != nil {
 		output.PrintError("Не удалось преобразовать файл data.json")
 		output.PrintError(err.Error())
 	}
 
-	vault.db.Write(string(data))
+	// vault.db.Write(string(data))
+	vault.db.Write(encData)
 }

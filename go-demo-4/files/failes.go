@@ -16,13 +16,13 @@ func NewJsonDb(name string) *JsonDb {
 	}
 }
 
-func (db *JsonDb) Write(content string) {
+func (db *JsonDb) Write(content []byte) {
 	file, err := os.Create(db.filename)
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer file.Close()
-	_, err = file.WriteString(content)
+	_, err = file.WriteString(string(content))
 	if err != nil {
 		fmt.Println(err)
 		return

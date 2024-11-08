@@ -5,7 +5,6 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"io"
-	"os"
 )
 
 type Encrypter struct {
@@ -13,7 +12,8 @@ type Encrypter struct {
 }
 
 func NewEncrypter() *Encrypter {
-	key := os.Getenv("KEY")
+	// key := os.Getenv("KEY")
+	key := "HAHA"
 	if key == "" {
 		panic("Не передан параметр KEY в переменные окружения")
 	}

@@ -10,7 +10,7 @@ func NewClodDb(url string) *CloudDb {
 	}
 }
 
-func (db *CloudDb) Write(content string) {
+func (db *CloudDb) Write(content []byte) {
 
 }
 
