@@ -6,42 +6,43 @@ import (
 	"fmt"
 
 	"github.com/fatih/color"
-) 
-
-
+)
 
 func main() {
 	fmt.Println("____Менеджер паролей")
 	vault := account.NewVault(files.NewJsonDb("data.json"))
 
-Menu: 
+Menu:
 	for {
-		variant := getMenu()
-		switch variant{
-		case 1:
+		// variant := getMenu()
+		variant := promptData([]string{
+			"1. Создать аккаунт",
+			"2. Найти аккаунт",
+			"3. Удалить аккаунт",
+			"4. Выход",
+			"Выберите вариант",
+		})
+		switch variant {
+		case "1":
 			createAccount(vault)
-		case 2:
+		case "2":
 			findAccount(vault)
-		case 3:
+		case "3":
 			deleteAccount(vault)
 		default:
 			break Menu
 		}
 	}
-	
-	
-	
+
 }
 
-
-
-func deleteAccount(vault *account.VaultWithDb){
-	url := promptData("Введите URL")
+func deleteAccount(vault *account.VaultWithDb) {
+	url := promptData([]string{"Введите URL"})
 	vault.DeleteAccountByURL(url)
 }
 
-func findAccount(vault *account.VaultWithDb){
-	url := promptData("Введите URL")
+func findAccount(vault *account.VaultWithDb) {
+	url := promptData([]string{"Введите URL"})
 	accounts := vault.FindAccountsByURL(url)
 	if len(accounts) == 0 {
 		color.Red("Аккаунтов не найдено")
@@ -51,14 +52,13 @@ func findAccount(vault *account.VaultWithDb){
 	}
 }
 
-
-func createAccount(vault *account.VaultWithDb){
-	login := promptData("Введите логин")
-	password := promptData("Введите пароль")
-	url := promptData("Введите url")
+func createAccount(vault *account.VaultWithDb) {
+	login := promptData([]string{"Введите логин"})
+	password := promptData([]string{"Введите пароль"})
+	url := promptData([]string{"Введите url"})
 	myAccount, err := account.NewAccount(login, password, url)
 	// files.ReadFile()
-	if (err != nil) {
+	if err != nil {
 		fmt.Println("'Неверный формат логин или урл'")
 		return
 	}
@@ -71,33 +71,36 @@ func createAccount(vault *account.VaultWithDb){
 	// color.RGB(255, 128, 0).Println(myAccount)
 }
 
+// func getMenu() int {
+// 	var variant int
+// 	fmt.Println("Выберите враиант:")
+// 	fmt.Println("1. Создать аккаунт")
+// 	fmt.Println("2. Найти аккаунт")
+// 	fmt.Println("3. Удалить аккаунт")
+// 	fmt.Println("4. Выход")
 
-func getMenu() int{
-	var variant int
-	fmt.Println("Выберите враиант:")
-	fmt.Println("1. Создать аккаунт")
-	fmt.Println("2. Найти аккаунт")
-	fmt.Println("3. Удалить аккаунт")
-	fmt.Println("4. Выход")
+// 	fmt.Scanln(&variant)
 
-	fmt.Scanln(&variant)
-
-	return variant
-}
-
+// 	return variant
+// }
 
 func double(number *int) {
 	*number = *number * 2
 }
 
-
-func promptData(str string) (string) {
-	var prompt string;
-	fmt.Println(str);
-	fmt.Scanln(&prompt);
-	return prompt
+func promptData[T any](prompt []T) string {
+	for i, line := range prompt {
+		if len(prompt)-1 == i {
+			fmt.Printf("%v: ", line)
+		} else {
+			fmt.Println(line)
+		}
+	}
+	var str string
+	// fmt.Println(str)
+	fmt.Scanln(&str)
+	return str
 }
-
 
 // func reverse(numbers *[]int) {
 // 	for index, value := range *numbers {
