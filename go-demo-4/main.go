@@ -3,11 +3,13 @@ package main
 import (
 	"demo/password/account"
 	"demo/password/files"
+	"demo/password/output"
 	"fmt"
 	"os"
 	"strings"
 
 	"github.com/fatih/color"
+	"github.com/joho/godotenv"
 )
 
 var menu = map[string]func(*account.VaultWithDb){
@@ -23,8 +25,13 @@ func main() {
 	res := os.Getenv("VAR")
 	fmt.Println(res)
 
+	err := godotenv.Load()
+	if err != nil {
+		output.PrintError("Не удалось найти env файл")
+	}
+
 	for _, e := range os.Environ() {
-		fmt.Println(strings.SplitN(e, "=", 2)[0])
+		fmt.Println(strings.SplitN(e, "=", 3)[0])
 		fmt.Println(e)
 	}
 	vault := account.NewVault(files.NewJsonDb("data.json"))
