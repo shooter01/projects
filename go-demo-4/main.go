@@ -4,6 +4,7 @@ import (
 	"demo/password/account"
 	"demo/password/files"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/fatih/color"
@@ -18,6 +19,14 @@ var menu = map[string]func(*account.VaultWithDb){
 
 func main() {
 	fmt.Println("____Менеджер паролей")
+
+	res := os.Getenv("VAR")
+	fmt.Println(res)
+
+	for _, e := range os.Environ() {
+		fmt.Println(strings.SplitN(e, "=", 2)[0])
+		fmt.Println(e)
+	}
 	vault := account.NewVault(files.NewJsonDb("data.json"))
 
 Menu:
