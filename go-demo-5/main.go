@@ -2,6 +2,7 @@ package main
 
 import (
 	"demo/weather/geo"
+	"demo/weather/weather"
 	"flag"
 	"fmt"
 )
@@ -11,6 +12,7 @@ func main() {
 	name := flag.String("name", "Anton", "Имя пользователя")
 	city := flag.String("city", "", "Город")
 	age := flag.Int("age", 18, "Возраст пользователя")
+	format := flag.Int("format", 1, "Формат вывода погоды")
 	isAdmin := flag.Bool("isAdmin", false, "Является админом")
 	flag.Parse()
 
@@ -27,6 +29,8 @@ func main() {
 	}
 	fmt.Println(geoData)
 
+	weatherData := weather.GetWeather(*geoData, *format)
+	fmt.Println(weatherData)
 	// r := strings.NewReader("Привет! Я поток данных")
 
 	// block := make([]byte, 4)
