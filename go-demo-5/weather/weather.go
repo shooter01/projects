@@ -9,11 +9,11 @@ import (
 	"net/url"
 )
 
-var WRONG_FROMAT = "WRONG_FORMAT"
+var WrongFormat = errors.New("WRONG_FROMAT")
 
 func GetWeather(geo geo.GeoData, format int) (string, error) {
 	if format < 1 || format > 5 {
-		return "", errors.New(WRONG_FROMAT)
+		return "", WrongFormat
 	}
 	baseUrl, err := url.Parse("https://wttr.in/" + geo.City)
 	if err != nil {

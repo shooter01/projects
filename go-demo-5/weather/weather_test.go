@@ -3,7 +3,6 @@ package weather_test
 import (
 	"demo/weather/geo"
 	"demo/weather/weather"
-	"errors"
 	"fmt"
 	"testing"
 )
@@ -29,8 +28,8 @@ func TestGetWeather(t *testing.T) {
 			// Act - выполняем функцию
 			str, err := weather.GetWeather(city, tc.format)
 			fmt.Println(str)
-			if err != errors.New(weather.WRONG_FROMAT) {
-				t.Errorf("Ожидалось %v, получение %v", errors.New(weather.WRONG_FROMAT), err)
+			if err != weather.WrongFormat {
+				t.Errorf("Ожидалось %v, получение %v", &weather.WrongFormat, err)
 			}
 		})
 	}
