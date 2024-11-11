@@ -37,20 +37,6 @@ func converter(count float64, fiatFrom string, fiatTo string) float64 {
 	}
 }
 
-// func getUserInput() (float64, float64, float64) {
-// 	var count float64
-// 	var fiatFrom float64
-// 	var fiatTo float64
-// 	fmt.Println("Введите данные")
-// 	fmt.Print("Валюта откуда (исходная валюта) (USD, RUB, EUR): ")
-// 	fmt.Scan(&fiatFrom)
-// 	fmt.Print("Введите количество денег (только цифры): ")
-// 	fmt.Scan(&count)
-// 	fmt.Print("Валюта куда (целевая валюта) (USD, RUB, EUR): ")
-// 	fmt.Scan(&fiatTo)
-// 	return count, fiatFrom, fiatTo
-// }
-
 func getFiatsString(excludingFiat string) string {
 	localArrOfFiats := remove(arrOfFiats, excludingFiat)
 	return "(" + strings.Join(localArrOfFiats, ", ") + ")"
