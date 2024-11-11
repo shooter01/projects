@@ -13,15 +13,28 @@ func main() {
 	toFiat := getUserInputTo(fromFiat)
 	fiatValue := getFiatValue()
 	fmt.Println(converter(fiatValue, fromFiat, toFiat))
-	fmt.Println(toFiat)
-	fmt.Println(fiatValue)
 }
 
-func converter(count int, fiatFrom string, fiatTo string) string {
+func converter(count float64, fiatFrom string, fiatTo string) float64 {
 	const USDToEURO = 0.94
-	const USDToRUB = 1.5
+	const USDToRUB = 95
 	const EUROToRUB = USDToRUB / USDToEURO
-	return ""
+	switch {
+	case fiatFrom == "USD" && fiatTo == "RUB":
+		return count * USDToRUB
+	case fiatFrom == "RUB" && fiatTo == "USD":
+		return count / USDToRUB
+	case fiatFrom == "EUR" && fiatTo == "USD":
+		return count / USDToEURO
+	case fiatFrom == "USD" && fiatTo == "EUR":
+		return count * USDToEURO
+	case fiatFrom == "EUR" && fiatTo == "RUB":
+		return count * EUROToRUB
+	case fiatFrom == "RUB" && fiatTo == "EUR":
+		return count * EUROToRUB
+	default:
+		return 0
+	}
 }
 
 // func getUserInput() (float64, float64, float64) {
