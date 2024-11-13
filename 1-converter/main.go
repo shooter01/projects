@@ -5,7 +5,9 @@ import (
 	"strings"
 )
 
-var conversionRates = map[string]map[string]float64{
+type currencyMap = map[string]map[string]float64
+
+var conversionRates = currencyMap{
 	"USD": {"EUR": 0.94, "RUB": 95},
 	"EUR": {"USD": 1 / 0.94, "RUB": 95 / 0.94},
 	"RUB": {"USD": 1.0 / 95, "EUR": 0.94 / 95},
@@ -18,10 +20,10 @@ func main() {
 	fromFiat := getUserInput("Валюта откуда (исходная валюта)", "")
 	toFiat := getUserInput("Валюта куда (целевая валюта)", fromFiat)
 	fiatValue := getFiatValue()
-	fmt.Printf("Количество валюты, которую вы получите: %f %s\n", converter(fiatValue, fromFiat, toFiat), toFiat)
+	fmt.Printf("Количество валюты, которую вы получите: %f %s\n", converter(fiatValue, fromFiat, toFiat, conversionRates), toFiat)
 }
 
-func converter(count float64, fiatFrom string, fiatTo string) float64 {
+func converter(count float64, fiatFrom string, fiatTo string, conversionRates currencyMap) float64 {
 	if rate, exists := conversionRates[fiatFrom][fiatTo]; exists {
 		return count * rate
 	}
