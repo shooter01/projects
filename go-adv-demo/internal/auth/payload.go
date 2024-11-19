@@ -1,5 +1,5 @@
 package auth
 
-type LoginRespons struct {
+type LoginResponse struct {
 	Token string `json:"token"`
 }

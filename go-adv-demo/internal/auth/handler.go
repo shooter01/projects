@@ -1,11 +1,11 @@
 package auth
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
 	"go/adv-demo/configs"
+	responses "go/adv-demo/pkg"
 )
 
 type AuthHandlerDeps struct {
@@ -28,13 +28,12 @@ func (handler *AuthHandler) Login() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		fmt.Println(handler.Config.Auth.Secret)
 		fmt.Println("Login")
-		res := LoginRespons{
+		res := LoginResponse{
 			Token: "123",
 		}
 
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(201)
-		json.NewEncoder(w).Encode(res)
+		responses.Json(w, res, 200)
+
 	}
 }
 
