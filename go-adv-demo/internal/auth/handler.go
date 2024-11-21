@@ -5,7 +5,8 @@ import (
 	"net/http"
 
 	"go/adv-demo/configs"
-	responses "go/adv-demo/pkg"
+	"go/adv-demo/pkg/req"
+	responses "go/adv-demo/pkg/res"
 )
 
 type AuthHandlerDeps struct {
@@ -25,20 +26,34 @@ func NewAuthHandler(router *http.ServeMux, deps AuthHandlerDeps) {
 }
 
 func (handler *AuthHandler) Login() http.HandlerFunc {
-	return func(w http.ResponseWriter, req *http.Request) {
-		fmt.Println(handler.Config.Auth.Secret)
-		fmt.Println("Login")
+	return func(w http.ResponseWriter, r *http.Request) {
+		body, err := req.HandleBody[LoginRequest](w, r)
+		fmt.Println(err.Error())
+
+		if err != nil {
+			return
+		}
+		fmt.Println(body)
 		res := LoginResponse{
 			Token: "123",
 		}
-
 		responses.Json(w, res, 200)
-
 	}
 }
 
 func (handler *AuthHandler) Register() http.HandlerFunc {
-	return func(w http.ResponseWriter, req *http.Request) {
-		fmt.Println("Login")
+	return func(w http.ResponseWriter, r *http.Request) {
+		body, err := req.HandleBody[RegisterRequest](w, r)
+		fmt.Println(err.Error())
+
+		if err != nil {
+			return
+		}
+		fmt.Println(body)
+
+		res := RegisterResponse{
+			Token: "333",
+		}
+		responses.Json(w, res, 200)
 	}
 }
