@@ -3,14 +3,21 @@ package main
 import (
 	"fmt"
 	"go-adv-demo/internal/auth"
+	"go/adv-demo/configs"
+	"go/adv-demo/link"
+	"go/adv-demo/pkg/db"
 	"net/http"
 )
 
 func main() {
-	// conf := configs.LoadConfig()
+	conf := configs.LoadConfig()
+
+	db := db.NewDb(conf)
 
 	router := http.NewServeMux()
 	auth.NewAuthHandler(router)
+
+	link.NewLinkRepository(db)
 
 	server := http.Server{
 		Addr:    ":8081",

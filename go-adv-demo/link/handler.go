@@ -2,91 +2,61 @@ package link
 
 import (
 	"fmt"
-	"net/http"
-
-	"go/adv-demo/configs"
 	"go/adv-demo/pkg/req"
 	responses "go/adv-demo/pkg/res"
+	"net/http"
 )
 
 type LinkHandlerDeps struct {
-	*configs.Config
+	LinkRepository *LinkRepository
 }
 
 type LinkHandler struct {
-	*configs.Config
+	LinkRepository *LinkRepository
 }
 
 func NewLinkHandler(router *http.ServeMux, deps LinkHandlerDeps) {
 	handler := &LinkHandler{
-		Config: deps.Config,
+		LinkRepository: deps.LinkRepository,
 	}
-	router.HandleFunc("POST /link/login", handler.Create())
+	router.HandleFunc("POST /link", handler.Create())
 	router.HandleFunc("PATCH /link/{id}", handler.Update())
 	router.HandleFunc("DELETE /link/{id}", handler.Delete())
-	router.HandleFunc("GET /{alias}", handler.GoTo())
+	router.HandleFunc("GET /{hash}", handler.GoTo())
 }
 
 func (handler *LinkHandler) Create() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		body, err := req.HandleBody[LinkRequest](w, r)
-		fmt.Println(err.Error())
-
+		body, err := req.HandleBody[LinkCreateRequest](&w, r)
 		if err != nil {
 			return
 		}
-		fmt.Println(body)
-		res := LinkResponse{
-			Token: "123",
+		link := NewLink(body.Url)
+		createdLink, err := handler.LinkRepository.Create(link)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
-		responses.Json(w, res, 200)
+		responses.Json(w, createdLink, http.StatusAccepted)
+		fmt.Println(createdLink)
 	}
 }
 
 func (handler *LinkHandler) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		body, err := req.HandleBody[LinkRequest](w, r)
-		fmt.Println(err.Error())
-
-		if err != nil {
-			return
-		}
-		fmt.Println(body)
-		res := LinkResponse{
-			Token: "123",
-		}
-		responses.Json(w, res, 200)
+		id := r.PathValue("id")
+		fmt.Println(id)
 	}
 }
 
 func (handler *LinkHandler) Update() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		body, err := req.HandleBody[LinkRequest](w, r)
-		fmt.Println(err.Error())
 
-		if err != nil {
-			return
-		}
-		fmt.Println(body)
-		res := LinkResponse{
-			Token: "123",
-		}
-		responses.Json(w, res, 200)
 	}
 }
 
 func (handler *LinkHandler) GoTo() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		body, err := req.HandleBody[LinkRequest](w, r)
-		fmt.Println(err.Error())
 
-		if err != nil {
-			return
-		}
-		fmt.Println(body)
-		res := LinkResponse{
-			Token: "123",
-		}
-		responses.Json(w, res, 200)
 	}
 }
