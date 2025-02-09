@@ -2,16 +2,17 @@ package main
 
 import (
 	"fmt"
+	"go/adv-demo2/internal/hello"
 	"net/http"
 )
 
-func hello(w http.ResponseWriter, req *http.Request) {
-	fmt.Println("Hello World")
-}
+//func hello(w http.ResponseWriter, req *http.Request) {
+//	fmt.Println("Hello World")
+//}
 
 func main() {
 	router := http.NewServeMux()
-	NewHelloHandler(router)
+	hello.NewHelloHandler(router)
 	server := http.Server{
 		Addr:    ":8081",
 		Handler: router,
