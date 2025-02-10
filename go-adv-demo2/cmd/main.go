@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"go/adv-demo2/configs"
 	"go/adv-demo2/internal/hello"
 	"net/http"
 )
@@ -11,6 +12,7 @@ import (
 //}
 
 func main() {
+	conf := configs.LoadConfig()
 	router := http.NewServeMux()
 	hello.NewHelloHandler(router)
 	server := http.Server{
