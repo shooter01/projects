@@ -3,12 +3,13 @@ package main
 import "fmt"
 
 func main() {
-	transactions := [5]string{"1", "2"}
-	transactionsNew := transactions
-	transactionsNew[0] = "30"
+	transactions := []string{"1", "2"}
+	//transactions[3] = "2"
+	//transactionsNew := transactions
+	transactions = append(transactions, "100")
 	//banks := [3]string{"test", "test2"}
 	//fmt.Println(len(transactions[1:5]))
 	//fmt.Println(banks)
 	fmt.Println(transactions)
-	fmt.Println(transactionsNew)
+	//fmt.Println(transactionsNew)
 }
