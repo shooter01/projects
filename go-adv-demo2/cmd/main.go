@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go/adv-demo2/configs"
+	"go/adv-demo2/internal/auth"
 	"go/adv-demo2/internal/hello"
 	"net/http"
 )
@@ -12,9 +12,11 @@ import (
 //}
 
 func main() {
-	conf := configs.LoadConfig()
+	//conf := configs.LoadConfig()
 	router := http.NewServeMux()
 	hello.NewHelloHandler(router)
+	auth.NewAuthHandler(router)
+
 	server := http.Server{
 		Addr:    ":8081",
 		Handler: router,
