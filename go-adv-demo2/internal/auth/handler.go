@@ -2,6 +2,7 @@ package auth
 
 import (
 	"fmt"
+	"go/adv-demo2/configs"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -12,9 +13,13 @@ import (
 //	fmt.Println("Hello World")
 //}
 
+type AuthHandlerDeps struct {
+	*configs.Config
+}
+
 type AuthHandler struct{}
 
-func NewAuthHandler(router *http.ServeMux) {
+func NewAuthHandler(router *http.ServeMux, deps *AuthHandlerDeps) {
 	handler := &AuthHandler{}
 	router.HandleFunc("POST /auth/login", handler.Login())
 	router.HandleFunc("POST /auth/register", handler.Register())
