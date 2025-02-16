@@ -1,9 +1,9 @@
 package auth
 
 import (
-	"encoding/json"
 	"fmt"
 	"go/adv-demo2/configs"
+	"go/adv-demo2/pkg"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -33,13 +33,10 @@ func NewAuthHandler(router *http.ServeMux, deps AuthHandlerDeps) {
 func (h *AuthHandler) Login() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		fmt.Println(h.Config.Auth.Secret)
-
 		res := LoginResponse{
 			Token: "123",
 		}
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(res)
+		pkg.Json(w, res, 201)
 	}
 }
 
