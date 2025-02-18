@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	"go/adv-demo2/configs"
@@ -27,13 +28,19 @@ func NewAuthHandler(router *mux.Router, deps AuthHandlerDeps) {
 	handler := &AuthHandler{
 		Config: deps.Config,
 	}
-	router.HandleFunc("POST /auth/login", handler.Login())
-	router.HandleFunc("POST /auth/register", handler.Register())
+	router.HandleFunc("/auth/login", handler.Login()).Methods("POST")
+	router.HandleFunc("/auth/register", handler.Register()).Methods("POST")
 }
 
 func (h *AuthHandler) Login() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		fmt.Println(h.Config.Auth.Secret)
+		var payload LoginRequest
+		err := json.NewDecoder(req.Body).Decode(&payload)
+		fmt.Println(payload)
+		if err != nil {
+			pkg.Json(w, err.Error(), http.StatusBadRequest)
+		}
 		res := LoginResponse{
 			Token: "123",
 		}
