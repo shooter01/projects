@@ -2,6 +2,7 @@ package auth
 
 import (
 	"fmt"
+	"github.com/gorilla/mux"
 	"go/adv-demo2/configs"
 	"go/adv-demo2/pkg"
 	"math/rand"
@@ -10,7 +11,7 @@ import (
 	"time"
 )
 
-//func hello(w http.ResponseWriter, req *http.Request) {
+//func verify(w http.ResponseWriter, req *http.Request) {
 //	fmt.Println("Hello World")
 //}
 
@@ -22,7 +23,7 @@ type AuthHandler struct {
 	*configs.Config
 }
 
-func NewAuthHandler(router *http.ServeMux, deps AuthHandlerDeps) {
+func NewAuthHandler(router *mux.Router, deps AuthHandlerDeps) {
 	handler := &AuthHandler{
 		Config: deps.Config,
 	}

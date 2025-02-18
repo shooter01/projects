@@ -2,20 +2,21 @@ package main
 
 import (
 	"fmt"
+	"github.com/gorilla/mux"
 	"go/adv-demo2/configs"
 	"go/adv-demo2/internal/auth"
-	"go/adv-demo2/internal/hello"
+	"go/adv-demo2/internal/verify"
 	"net/http"
 )
 
-//func hello(w http.ResponseWriter, req *http.Request) {
+//func verify(w http.ResponseWriter, req *http.Request) {
 //	fmt.Println("Hello World")
 //}
 
 func main() {
 	conf := configs.LoadConfig()
-	router := http.NewServeMux()
-	hello.NewHelloHandler(router)
+	router := mux.NewRouter()
+	verify.NewHelloHandler(router)
 	auth.NewAuthHandler(router, auth.AuthHandlerDeps{
 		Config: conf,
 	})
