@@ -1,9 +1,18 @@
 package main
 
-import "fmt"
+import (
+	pkg "demo/app-2/pkg"
+	"fmt"
+)
 
 func main() {
 	transactions := []float64{1, 2, 3, 4}
+
+	calc := pkg.Calculator{
+		Data: "test1",
+	}
+	data := calc.NewCalc()
+	fmt.Println(data)
 	//maxIter := 3
 	//for {
 	//	number := getTrabsaction()
@@ -15,7 +24,7 @@ func main() {
 	//}
 	fmt.Println(transactions)
 
-	fmt.Println(calc(transactions))
+	//fmt.Println(calc(transactions))
 	//fmt.Println(transactions)
 	//transactions[3] = "2"
 	//transactionsNew := transactions

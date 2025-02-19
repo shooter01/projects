@@ -40,6 +40,15 @@ func (h *AuthHandler) Login() http.HandlerFunc {
 		fmt.Println(payload)
 		if err != nil {
 			pkg.Json(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		if payload.Email == "" {
+			pkg.Json(w, "Email required", http.StatusBadRequest)
+			return
+		}
+		if payload.Password == "" {
+			pkg.Json(w, "Password required", http.StatusBadRequest)
+			return
 		}
 		res := LoginResponse{
 			Token: "123",
