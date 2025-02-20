@@ -8,6 +8,7 @@ import (
 	"go/adv-demo2/pkg"
 	"math/rand"
 	"net/http"
+	"net/mail"
 	"strconv"
 	"time"
 )
@@ -48,6 +49,11 @@ func (h *AuthHandler) Login() http.HandlerFunc {
 		}
 		if payload.Password == "" {
 			pkg.Json(w, "Password required", http.StatusBadRequest)
+			return
+		}
+		_, err = mail.ParseAddress(payload.Email)
+		if err != nil {
+			pkg.Json(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 		res := LoginResponse{
