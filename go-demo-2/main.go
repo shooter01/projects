@@ -22,6 +22,7 @@ func main() {
 	//		break
 	//	}
 	//}
+	createMap()
 	fmt.Println(transactions)
 
 	//fmt.Println(calc(transactions))
@@ -50,4 +51,12 @@ func calc(tr []float64) float64 {
 	}
 	tr[0] = 2222
 	return summa
+}
+
+func createMap() map[string]string {
+	myMap := map[string]string{"a": "1", "b": "2", "c": "3"}
+	for key, value := range myMap {
+		fmt.Println(key, value)
+	}
+	return myMap
 }
