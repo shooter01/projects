@@ -3,6 +3,7 @@ package auth
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/mux"
 	"go/adv-demo2/configs"
 	"go/adv-demo2/pkg"
@@ -39,18 +40,23 @@ func (h *AuthHandler) Login() http.HandlerFunc {
 		var payload LoginRequest
 		err := json.NewDecoder(req.Body).Decode(&payload)
 		fmt.Println(payload)
-		if err != nil {
-			pkg.Json(w, err.Error(), http.StatusBadRequest)
+		validate := validator.New()
+		if validate.Struct(payload) != nil {
+			pkg.Json(w, err.Error(), 402)
 			return
 		}
-		if payload.Email == "" {
-			pkg.Json(w, "Email required", http.StatusBadRequest)
-			return
-		}
-		if payload.Password == "" {
-			pkg.Json(w, "Password required", http.StatusBadRequest)
-			return
-		}
+		//if err != nil {
+		//	pkg.Json(w, err.Error(), http.StatusBadRequest)
+		//	return
+		//}
+		//if payload.Email == "" {
+		//	pkg.Json(w, "Email required", http.StatusBadRequest)
+		//	return
+		//}
+		//if payload.Password == "" {
+		//	pkg.Json(w, "Password required", http.StatusBadRequest)
+		//	return
+		//}
 		_, err = mail.ParseAddress(payload.Email)
 		if err != nil {
 			pkg.Json(w, err.Error(), http.StatusBadRequest)
