@@ -1,12 +1,10 @@
 package auth
 
 import (
-	"encoding/json"
 	"fmt"
-	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/mux"
 	"go/adv-demo2/configs"
-	"go/adv-demo2/pkg"
+	response "go/adv-demo2/pkg/res"
 	"math/rand"
 	"net/http"
 	"net/mail"
@@ -37,14 +35,14 @@ func NewAuthHandler(router *mux.Router, deps AuthHandlerDeps) {
 func (h *AuthHandler) Login() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		fmt.Println(h.Config.Auth.Secret)
-		var payload LoginRequest
-		err := json.NewDecoder(req.Body).Decode(&payload)
-		fmt.Println(payload)
-		validate := validator.New()
-		if validate.Struct(payload) != nil {
-			pkg.Json(w, err.Error(), 402)
-			return
-		}
+		//var payload LoginRequest
+		//err := json.NewDecoder(req.Body).Decode(&payload)
+		//fmt.Println(payload)
+		//validate := validator.New()
+		//if validate.Struct(payload) != nil {
+		//	response.Json(w, err.Error(), 402)
+		//	return
+		//}
 		//if err != nil {
 		//	pkg.Json(w, err.Error(), http.StatusBadRequest)
 		//	return
@@ -59,13 +57,13 @@ func (h *AuthHandler) Login() http.HandlerFunc {
 		//}
 		_, err = mail.ParseAddress(payload.Email)
 		if err != nil {
-			pkg.Json(w, err.Error(), http.StatusBadRequest)
+			response.Json(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 		res := LoginResponse{
 			Token: "123",
 		}
-		pkg.Json(w, res, 201)
+		response.Json(w, res, 201)
 	}
 }
 
