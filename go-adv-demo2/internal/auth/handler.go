@@ -4,12 +4,9 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"go/adv-demo2/configs"
+	request "go/adv-demo2/pkg/req"
 	response "go/adv-demo2/pkg/res"
-	"math/rand"
 	"net/http"
-	"net/mail"
-	"strconv"
-	"time"
 )
 
 //func verify(w http.ResponseWriter, req *http.Request) {
@@ -35,6 +32,15 @@ func NewAuthHandler(router *mux.Router, deps AuthHandlerDeps) {
 func (h *AuthHandler) Login() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		fmt.Println(h.Config.Auth.Secret)
+
+		body, err := request.HandleBody[LoginRequest](w, req)
+
+		if err != nil {
+			return
+		}
+		response.Json(w, body, 201)
+		//return
+
 		//var payload LoginRequest
 		//err := json.NewDecoder(req.Body).Decode(&payload)
 		//fmt.Println(payload)
@@ -55,24 +61,28 @@ func (h *AuthHandler) Login() http.HandlerFunc {
 		//	pkg.Json(w, "Password required", http.StatusBadRequest)
 		//	return
 		//}
-		_, err = mail.ParseAddress(payload.Email)
-		if err != nil {
-			response.Json(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-		res := LoginResponse{
-			Token: "123",
-		}
-		response.Json(w, res, 201)
+		//_, err = mail.ParseAddress(payload.Email)
+		//if err != nil {
+		//	response.Json(w, err.Error(), http.StatusBadRequest)
+		//	return
+		//}
+		//res := LoginResponse{
+		//	Token: "123",
+		//}
+		//response.Json(w, res, 201)
 	}
 }
 
 func (h AuthHandler) Register() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
-		rand.Seed(time.Now().UnixNano()) // Инициализация генератора случайных чисел
-		num := rand.Intn(6) + 1          // Генерация числа от 1 до 6
+		fmt.Println(h.Config.Auth.Secret)
 
-		w.Write([]byte(strconv.Itoa(num))) // Отправка числа как строки
+		body, err := request.HandleBody[RegisterRequest](w, req)
+
+		if err != nil {
+			return
+		}
+		response.Json(w, body, 201)
 	}
 }

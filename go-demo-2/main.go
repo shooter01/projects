@@ -22,6 +22,16 @@ func main() {
 	//		break
 	//	}
 	//}
+
+	for {
+		number := enterBookmark()
+		transactions = append(transactions, number)
+		maxIter--
+		if maxIter < 0 {
+			break
+		}
+	}
+
 	createMap()
 	fmt.Println(transactions)
 
@@ -59,4 +69,24 @@ func createMap() map[string]string {
 		fmt.Println(key, value)
 	}
 	return myMap
+}
+
+func showBookmarks(myMap) {
+	for key, value := range myMap {
+		fmt.Println(key, value)
+	}
+}
+
+func enterBookmark(myMap *map[string]string) *map[string]string {
+	var key, value string
+	fmt.Print("Enter bookmark key: ")
+	fmt.Scan(&key)
+	fmt.Print("Enter bookmark value: ")
+	fmt.Scan(&value)
+	(*myMap)[key] = value
+	return myMap
+}
+
+func deleteBookmark(myMap *map[string]string, key string) {
+	delete(*myMap, key)
 }
