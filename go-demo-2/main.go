@@ -5,6 +5,8 @@ import (
 	"fmt"
 )
 
+type bookmarksMap = map[string]string
+
 func main() {
 	transactions := []float64{1, 2, 3, 4}
 
@@ -63,7 +65,7 @@ func calc(tr []float64) float64 {
 	return summa
 }
 
-func createMap() map[string]string {
+func createMap() bookmarksMap {
 	myMap := map[string]string{"a": "1", "b": "2", "c": "3"}
 	for key, value := range myMap {
 		fmt.Println(key, value)
@@ -71,13 +73,13 @@ func createMap() map[string]string {
 	return myMap
 }
 
-func showBookmarks(myMap) {
+func showBookmarks(myMap bookmarksMap) {
 	for key, value := range myMap {
 		fmt.Println(key, value)
 	}
 }
 
-func enterBookmark(myMap *map[string]string) *map[string]string {
+func enterBookmark(myMap *bookmarksMap) *bookmarksMap {
 	var key, value string
 	fmt.Print("Enter bookmark key: ")
 	fmt.Scan(&key)
@@ -87,6 +89,6 @@ func enterBookmark(myMap *map[string]string) *map[string]string {
 	return myMap
 }
 
-func deleteBookmark(myMap *map[string]string, key string) {
+func deleteBookmark(myMap *bookmarksMap, key string) {
 	delete(*myMap, key)
 }
