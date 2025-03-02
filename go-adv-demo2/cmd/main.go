@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"go/adv-demo2/configs"
+	"go/adv-demo2/db"
 	"go/adv-demo2/internal/auth"
 	"go/adv-demo2/internal/verify"
 	"net/http"
@@ -15,6 +16,7 @@ import (
 
 func main() {
 	conf := configs.LoadConfig()
+	_ = db.NewDb(conf)
 	router := mux.NewRouter()
 	verify.NewHelloHandler(router)
 	auth.NewAuthHandler(router, auth.AuthHandlerDeps{
