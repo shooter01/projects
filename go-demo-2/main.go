@@ -1,20 +1,22 @@
 package main
 
 import (
-	pkg "demo/app-2/pkg"
+	//pkg "demo/app-2/pkg"
 	"fmt"
 )
 
 type bookmarksMap = map[string]string
 
 func main() {
-	transactions := []float64{1, 2, 3, 4}
-
-	calc := pkg.Calculator{
-		Data: "test1",
-	}
-	data := calc.NewCalc()
-	fmt.Println(data)
+	arr := []int{1, 2, 3}
+	fmt.Println(reverse(&arr))
+	//transactions := []float64{1, 2, 3, 4}
+	//
+	//calc := pkg.Calculator{
+	//	Data: "test1",
+	//}
+	//data := calc.NewCalc()
+	//fmt.Println(data)
 	//maxIter := 3
 	//for {
 	//	number := getTrabsaction()
@@ -25,17 +27,17 @@ func main() {
 	//	}
 	//}
 
-	for {
-		number := enterBookmark()
-		transactions = append(transactions, number)
-		maxIter--
-		if maxIter < 0 {
-			break
-		}
-	}
-
-	createMap()
-	fmt.Println(transactions)
+	//for {
+	//	number := enterBookmark()
+	//	transactions = append(transactions, number)
+	//	maxIter--
+	//	if maxIter < 0 {
+	//		break
+	//	}
+	//}
+	//
+	//createMap()
+	//fmt.Println(transactions)
 
 	//fmt.Println(calc(transactions))
 	//fmt.Println(transactions)
@@ -45,7 +47,7 @@ func main() {
 	//banks := [3]string{"test", "test2"}
 	//fmt.Println(len(transactions[1:5]))
 	//fmt.Println(banks)
-	fmt.Println(transactions)
+	//fmt.Println(transactions)
 	//fmt.Println(transactionsNew)
 }
 
@@ -71,6 +73,15 @@ func createMap() bookmarksMap {
 		fmt.Println(key, value)
 	}
 	return myMap
+}
+
+func reverse(arr *[]int) *[]int {
+	n := len(*arr)
+	result := make([]int, n)
+	for i, v := range *arr {
+		result[n-1-i] = v
+	}
+	return &result
 }
 
 func showBookmarks(myMap bookmarksMap) {
