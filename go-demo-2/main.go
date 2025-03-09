@@ -7,9 +7,24 @@ import (
 
 type bookmarksMap = map[string]string
 
+type account struct {
+	login    string
+	password string
+	url      string
+}
+
 func main() {
 	arr := []int{1, 2, 3}
 	fmt.Println(reverse(&arr))
+
+	account1 := account{
+		login:    "login",
+		password: "password",
+		url:      "url",
+	}
+
+	fmt.Println(account1)
+
 	//transactions := []float64{1, 2, 3, 4}
 	//
 	//calc := pkg.Calculator{
