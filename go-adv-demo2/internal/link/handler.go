@@ -1,6 +1,7 @@
 package link
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -26,7 +27,7 @@ func NewLinkHandler(router *mux.Router, deps LinkHandlerDeps) {
 	}
 	router.HandleFunc("/link", handler.Create()).Methods("POST")
 	router.HandleFunc("/link", handler.Patch()).Methods("PATCH")
-	router.HandleFunc("/link", handler.Delete()).Methods("DELETE")
+	router.HandleFunc("/link/{id}", handler.Delete()).Methods("DELETE")
 	router.HandleFunc("/{alias}", handler.Get()).Methods("GET")
 }
 
@@ -46,7 +47,8 @@ func (h LinkHandler) Patch() http.HandlerFunc {
 func (h LinkHandler) Delete() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
-
+		id := mux.Vars(req)["id"]
+		fmt.Println(id)
 	}
 }
 
