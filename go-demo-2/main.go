@@ -17,13 +17,17 @@ func main() {
 	arr := []int{1, 2, 3}
 	fmt.Println(reverse(&arr))
 
+	login := promptData("Введите логин")
+	password := promptData("Введите password")
+	url := promptData("Введите url")
+
 	account1 := account{
-		login:    "login",
-		password: "password",
-		url:      "url",
+		login:    login,
+		password: password,
+		url:      url,
 	}
 
-	fmt.Println(account1)
+	printPrompt(account1)
 
 	//transactions := []float64{1, 2, 3, 4}
 	//
@@ -66,9 +70,13 @@ func main() {
 	//fmt.Println(transactionsNew)
 }
 
-func getTrabsaction() float64 {
-	var number float64
-	fmt.Print("Enter number: ")
+func printPrompt(data account) {
+	fmt.Println(data)
+}
+
+func promptData(prompt string) string {
+	var number string
+	fmt.Print(prompt + ": ")
 	fmt.Scan(&number)
 	return number
 }
