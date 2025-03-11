@@ -5,8 +5,6 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-
-	"go/adv-demo2/configs"
 )
 
 //func verify(w http.ResponseWriter, req *http.Request) {
@@ -14,16 +12,16 @@ import (
 //}
 
 type LinkHandlerDeps struct {
-	*configs.Config
+	LinkRepository *LinkRepository
 }
 
 type LinkHandler struct {
-	*configs.Config
+	LinkRepository *LinkRepository
 }
 
 func NewLinkHandler(router *mux.Router, deps LinkHandlerDeps) {
 	handler := &LinkHandler{
-		Config: deps.Config,
+		LinkRepository: deps.LinkRepository,
 	}
 	router.HandleFunc("/link", handler.Create()).Methods("POST")
 	router.HandleFunc("/link", handler.Patch()).Methods("PATCH")
@@ -33,7 +31,7 @@ func NewLinkHandler(router *mux.Router, deps LinkHandlerDeps) {
 
 func (h *LinkHandler) Create() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-
+		h.LinkRepository.Create()
 	}
 }
 
