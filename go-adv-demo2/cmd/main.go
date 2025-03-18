@@ -19,12 +19,12 @@ import (
 
 func main() {
 	conf := configs.LoadConfig()
-	db = db.NewDb(conf)
+	dbName := db.NewDb(conf)
 	router := mux.NewRouter()
 	verify.NewHelloHandler(router)
 
 	// Repositories
-	linkRepository := link.NewLinkRepository(db)
+	linkRepository := link.NewLinkRepository(dbName)
 
 	//handler
 	auth.NewAuthHandler(router, auth.AuthHandlerDeps{

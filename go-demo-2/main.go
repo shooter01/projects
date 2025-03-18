@@ -27,7 +27,7 @@ func main() {
 		url:      url,
 	}
 
-	printPrompt(account1)
+	printPrompt(&account1)
 
 	//transactions := []float64{1, 2, 3, 4}
 	//
@@ -70,7 +70,7 @@ func main() {
 	//fmt.Println(transactionsNew)
 }
 
-func printPrompt(data account) {
+func printPrompt(data *account) {
 	fmt.Println(data)
 }
 

@@ -5,6 +5,9 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+
+	request "go/adv-demo2/pkg/req"
+	response "go/adv-demo2/pkg/res"
 )
 
 //func verify(w http.ResponseWriter, req *http.Request) {
@@ -31,7 +34,17 @@ func NewLinkHandler(router *mux.Router, deps LinkHandlerDeps) {
 
 func (h *LinkHandler) Create() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		h.LinkRepository.Create()
+		body, err := request.HandleBody[LinkCreateRequest](w, req)
+		if err != nil {
+			return
+		}
+		link := NewLink(body.Url)
+		createdLink, err := h.LinkRepository.Create(link)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+		response.Json(w, createdLink, http.StatusCreated)
+
 	}
 }
 
