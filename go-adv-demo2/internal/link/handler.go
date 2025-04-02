@@ -29,7 +29,7 @@ func NewLinkHandler(router *mux.Router, deps LinkHandlerDeps) {
 	router.HandleFunc("/link", handler.Create()).Methods("POST")
 	router.HandleFunc("/link", handler.Patch()).Methods("PATCH")
 	router.HandleFunc("/link/{id}", handler.Delete()).Methods("DELETE")
-	router.HandleFunc("/{alias}", handler.Get()).Methods("GET")
+	router.HandleFunc("/{alias}", handler.GoTo()).Methods("GET")
 }
 
 func (h *LinkHandler) Create() http.HandlerFunc {
@@ -63,9 +63,15 @@ func (h LinkHandler) Delete() http.HandlerFunc {
 	}
 }
 
-func (h LinkHandler) Get() http.HandlerFunc {
+func (h LinkHandler) GoTo() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
-
+		hash := mux.Vars(req)["alias"]
+		link, err := h.LinkRepository.GetByHash(hash)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+		http.Redirect(w, req, link.Url, http.StatusTemporaryRedirect)
 	}
 }
