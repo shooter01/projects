@@ -3,6 +3,7 @@ package main
 import (
 	//pkg "demo/app-2/pkg"
 	"fmt"
+	"math/rand/v2"
 )
 
 type bookmarksMap = map[string]string
@@ -13,9 +14,22 @@ type account struct {
 	url      string
 }
 
+var letterRunes = []rune("abcdefghijklmnoprstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ")
+
+func generatePassword(n int) string {
+	res := make([]rune, n)
+	for i := range res {
+		res[i] = letterRunes[rand.IntN(len(letterRunes))]
+	}
+	return string(res)
+}
+
 func main() {
-	arr := []int{1, 2, 3}
-	fmt.Println(reverse(&arr))
+
+	//arr := []int{1, 2, 3}
+	fmt.Println(generatePassword(12))
+
+	return
 
 	login := promptData("Введите логин")
 	password := promptData("Введите password")
