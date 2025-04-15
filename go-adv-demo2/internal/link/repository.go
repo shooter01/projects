@@ -1,6 +1,8 @@
 package link
 
 import (
+	"gorm.io/gorm/clause"
+
 	"go/adv-demo2/db"
 )
 
@@ -18,6 +20,14 @@ func NewLinkRepository(db *db.Db) *LinkRepository {
 
 func (repo *LinkRepository) Create(link *Link) (*Link, error) {
 	result := repo.Database.DB.Create(link)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return link, nil
+}
+
+func (repo *LinkRepository) Update(link *Link) (*Link, error) {
+	result := repo.Database.DB.Clauses(clause.Returning{}).Updates(link)
 	if result.Error != nil {
 		return nil, result.Error
 	}
