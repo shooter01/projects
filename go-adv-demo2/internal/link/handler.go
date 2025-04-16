@@ -1,7 +1,6 @@
 package link
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -93,8 +92,18 @@ func (h LinkHandler) Patch() http.HandlerFunc {
 func (h LinkHandler) Delete() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, req *http.Request) {
-		id := mux.Vars(req)["id"]
-		fmt.Println(id)
+		idString := mux.Vars(req)["id"]
+		id, err := strconv.ParseUint(idString, 10, 32)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+		link, err := h.LinkRepository.Delete(&Link{
+			Model: gorm.Model{ID: uint(id)},
+		})
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+		response.Json(w, link, http.StatusCreated)
 	}
 }
 

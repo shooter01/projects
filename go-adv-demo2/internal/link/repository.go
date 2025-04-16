@@ -34,6 +34,14 @@ func (repo *LinkRepository) Update(link *Link) (*Link, error) {
 	return link, nil
 }
 
+func (repo *LinkRepository) Delete(link *Link) (*Link, error) {
+	result := repo.Database.DB.Clauses(clause.Returning{}).Delete(link)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return link, nil
+}
+
 func (repo *LinkRepository) GetByHash(hash string) (*Link, error) {
 	var link Link
 	result := repo.Database.DB.First(&link, "hash = ?", hash)
